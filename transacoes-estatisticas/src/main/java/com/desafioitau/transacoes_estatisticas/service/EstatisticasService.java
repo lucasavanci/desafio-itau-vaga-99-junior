@@ -9,9 +9,11 @@ import com.desafioitau.transacoes_estatisticas.controller.EstatisticasResponseDT
 import com.desafioitau.transacoes_estatisticas.controller.TransacoesRequestDTO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 
 public class EstatisticasService {
 
@@ -19,21 +21,25 @@ public class EstatisticasService {
 
     public EstatisticasResponseDTO calcularEstatistica(Integer intervalo) {
 
+        log.info("Iniciando processo de listar transacoes.");
+
         List<TransacoesRequestDTO> transacoes = transacoesService.listarTransacoes(intervalo);
 
         if (transacoes.isEmpty()) {
-            return new EstatisticasResponseDTO(0L, 0.0, 0.0, 0.0, 0.0);
+            log.info("Nenhuma transacao encontrada. Atribuindo valor zerado.");
+            EstatisticasResponseDTO estatisticas = new EstatisticasResponseDTO(0L, 0.0, 0.0, 0.0, 0.0);
+            log.info("Estatisticas: {}", estatisticas);
+            return estatisticas;
         }
 
         DoubleSummaryStatistics estatisticaTransacoes = transacoes.stream().mapToDouble(TransacoesRequestDTO::valor)
                 .summaryStatistics();
 
+        log.info("Calculando estatisticas. {}", estatisticaTransacoes);
         return new EstatisticasResponseDTO(estatisticaTransacoes.getCount(),
                 estatisticaTransacoes.getSum(),
                 estatisticaTransacoes.getAverage(),
                 estatisticaTransacoes.getMin(),
                 estatisticaTransacoes.getMax());
-
     }
-
 }
