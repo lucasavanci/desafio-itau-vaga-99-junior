@@ -28,17 +28,17 @@ public class TransacoesService {
 
 		if (dto.dataHora() == null || dto.valor() == null) {
 			log.info("Favor inserir um valor e dataHora valida");
-			throw new UnprocessableEntity(ExceptionConstants.DATAHORA_VALOR_NULLO);
+			throw new UnprocessableEntity(ExceptionConstants.DATAHORA_VALOR_NULLO.getMessage());
 		}
 
 		if (dto.valor() < 0) {
 			log.info("Favor inserir um valor maior ou igual a zero");
-			throw new UnprocessableEntity(ExceptionConstants.VALOR_NEGATIVO);
+			throw new UnprocessableEntity(ExceptionConstants.VALOR_NEGATIVO.getMessage());
 		}
 
 		if (dto.dataHora().isAfter(OffsetDateTime.now())) {
 			log.info("DataHora invalida. Maior que o momento");
-			throw new UnprocessableEntity(ExceptionConstants.DATAHORA_INVALIDA);
+			throw new UnprocessableEntity(ExceptionConstants.DATAHORA_INVALIDA.getMessage());
 		}
 
 		log.info("Adicionando transacao, valor: {} e dataHora: {}", dto.valor(), dto.dataHora());
