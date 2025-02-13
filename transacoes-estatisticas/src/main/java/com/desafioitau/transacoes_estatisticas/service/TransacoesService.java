@@ -22,7 +22,7 @@ public class TransacoesService {
 	private final List<TransacoesRequestDTO> listaTransacoes = new ArrayList<>();
 
 	// POST /transacao
-	public void criarTransacao(TransacoesRequestDTO dto) {
+	public TransacoesRequestDTO criarTransacao(TransacoesRequestDTO dto) {
 
 		log.info("Iniciando processo de validacao, valor: {} e dataHora: {}", dto.valor(), dto.dataHora());
 
@@ -44,6 +44,8 @@ public class TransacoesService {
 		log.info("Adicionando transacao, valor: {} e dataHora: {}", dto.valor(), dto.dataHora());
 
 		listaTransacoes.add(dto);
+
+		return dto;
 	}
 
 	// DELETE /transacao

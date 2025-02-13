@@ -20,11 +20,11 @@ public class TransacoesController {
     private final TransacoesService transacoesService;
 
     @PostMapping
-    public ResponseEntity<Void> criarTransacao(@RequestBody TransacoesRequestDTO dto) {
+    public ResponseEntity<TransacoesRequestDTO> criarTransacao(@RequestBody TransacoesRequestDTO dto) {
 
-        transacoesService.criarTransacao(dto);
+        TransacoesRequestDTO transacaoCriada = transacoesService.criarTransacao(dto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(transacaoCriada);
     }
 
     @DeleteMapping
